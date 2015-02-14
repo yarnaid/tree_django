@@ -11,7 +11,7 @@
   * templates _base templates dir_
   * tree _tree application_
     * controller.py _interaction with DB_
-    * static _app statci files --- js and css__
+    * static _app statci files --- js and css_
     * templates _app templates_
     * views.py _pages rendering and ajax responds_
   * tree_django _settings storage_
