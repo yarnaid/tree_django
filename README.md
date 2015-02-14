@@ -1,5 +1,7 @@
 # Simple Web-App for Working with Trees in PostgresSQL
-Used django version `1.7.1`
+Used versions:
+  * django version `1.7.1`
+  * python version 2.7.9
 ![Screenshot](screen.png)
 
 ## Strucutre
