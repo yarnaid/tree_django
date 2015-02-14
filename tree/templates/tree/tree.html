@@ -1,0 +1,72 @@
+{% extends "tree_django/base.html" %}
+{% load staticfiles %}
+
+{% block extra_js %}
+{{ block.super }}
+<script src="{% static "tree/js/tree.js" %}"></script>
+{% endblock %}
+
+{% block body %}
+<script type="text/javascript">
+    function update_tree () {
+        var f = $('form#update-form');
+
+        var q = f.find('[name=q]').val();
+        var depth = f.find('[name=depth]').val();
+        var show_level = f.find('[name=show_level]').val();
+
+        build_tree(depth, q, show_level);
+        return false;
+    }
+    update_tree();
+
+    $(function(){$('span#updated').text('(load time: ' + (new Date()).toISOString() + ')')});
+    $(function(){$('input#show_level').slider({
+        formatter: function(value) {
+            return 'Current value: ' + value;
+        }
+    });});
+    $(function(){$('input#depth').slider({
+        formatter: function(value) {
+            return 'Current value: ' + value;
+        }
+    });});
+</script>
+
+<div class="col-md-12" id="msg">
+</div>
+
+<div class="col-lg-4">
+    <div class="panel panel-default">
+        <div class="panel-heading"><h3 class="panel-title">Controls <span id="updated"></span></h3></div>
+        <div class="panel-body">
+            <form id="update-form" onsubmit="return update_tree();">
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            Find:
+                        </span>
+                        <input name="q" type="text" class="form-control" placeholder="node name" />
+                    </div>
+                    <div class="input-group">
+                        <label> Show depth:
+                            <input id="depth" name="depth" type="text" data-slider-min="1" data-slider-max="{{max_depth}}" data-slider-step="1" data-slider-value="2"/>
+                        </label>
+                    </div>
+                    <div class="input-group">
+                        <label> Show level for:
+                            <input id="show_level" name="show_level" type="text" data-slider-min="0" data-slider-max="{{max_depth}}" data-slider-step="1" data-slider-value="1"/>
+                        </label>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-default">Submit</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="col-lg-8" id="tree">
+    <ul></ul>
+</div>
+
+{% endblock %}
